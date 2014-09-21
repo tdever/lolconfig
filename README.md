@@ -1,6 +1,6 @@
 # Lolconfig
 
-TODO: Write a gem description
+lolconfig is a lightweight way to configure your ruby app.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Write usage instructions here...
 
 ## Contributing
 
