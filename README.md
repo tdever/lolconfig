@@ -1,6 +1,6 @@
 # Lolconfig
 
-lolconfig is a lightweight way to configure your ruby app.
+Lolconfig is a lightweight way to configure your ruby app.
 
 ## Installation
 
