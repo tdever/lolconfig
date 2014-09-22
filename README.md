@@ -20,7 +20,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here...
+Require this gem in your application:
+
+```ruby
+require "lolconfig"
+```
+
+Load the configuration from a YAML file or specify your own hash of key value pairs:
+
+```ruby
+#Loads the default configuration file ("config.yaml")
+Lolconfig::load()
+
+#Specify a hash of key/value pairs
+Lolconfig::set({ :item1 => "value1", :item2 => "value2" })
+```
+
+Retrieve configuration settings by requesting the setting name.
+
+```ruby
+my_setting = Lolconfig::get("my_setting")
+puts my_setting
+```
 
 ## Contributing
 

@@ -1,33 +1,74 @@
+require "logger"
 require "yaml"
 require "./lolconfig/version"
 require "./lolconfig/config"
 
 require "pry"
 
-module Lolconfig	
+#http://stackoverflow.com/questions/6233124/where-to-place-access-config-file-in-gem
 
-	binding.pry
+module Lolconfig
 
-	@configs = {
-	}	
+	CONFIG_DEFAULT_FILENAME = "config.yaml"		#Default config file name
+	CONFIG_DEFAULT_NAME = "default"			#Default configuration name
 
 
-	def self.set_config(options = {}, name = "default")
-		binding.pry
-		
+	# Hash containing the available configuration objects
+	@configs = Hash.new()
+
+
+	# Initialize the logger
+	@log = Logger.new(STDOUT)
+	@log.level = Logger::WARN
+
+
+	#Gets the specified configuration setting
+	#Params:
+	#+key+:: Setting name.
+	#+name+:: Configuration name.
+	def self.get(key, name = CONFIG_DEFAULT_NAME)
 		cfg = @configs[name]
 		if cfg
-			cfg.configure(options)
+			return cfg.get(key)
+		end
+
+		return nil
+	end
+
+	#Returns a Hash of the current configuration settings.
+	#Params:
+	#+name+::Configuration name. This method gets the default configuration if this argument is not specified.
+	def self.get_config(name = CONFIG_DEFAULT_NAME)
+		cfg = @configs[name]
+		if cfg
+			return cfg.get_hash()
+		end
+
+		return nil
+	end
+	
+
+	#Loads the default configuration file from the current working directory.
+	def self.load()
+		name = CONFIG_DEFAULT_FILENAME
+		if(File.extname(name) != "yaml")
+			name = name + ".yaml"
+		end
+
+		#TODO: Enable loading multiple config files for different configurations based on sub directory names or
+		#file names like "config.yaml", "config.debug.yaml", "config.win32.yaml", etc.
+		if File.exists? name
+			self.load_file(filename)
 		else
-			@configs[name] = Config.new(options)
+			@log.warn("Config file \"{name}\" not found.")
 		end
 	end
 
-	def self.load(path)
-
-	end
-
-	def self.load_file(filename, name = "default")
+	#Loads the specified configuration file. Optionally, a configuration name can be specified.
+	#Params:
+	#+filename+:: File name.
+	#+name+:: Configuration name. If not specified, the default configuration is used.
+	def self.load_file(filename, name = CONFIG_DEFAULT_NAME)
 		return unless filename
 
 		begin
@@ -41,20 +82,43 @@ module Lolconfig
 			end
 
 		rescue Errno::ENOENT
-			log(:warning, "Configuration file not found.")
+			@log.warn("Configuration file not found.")
 		rescue Psych::SyntaxError
-			log(:warning, "YAML file contains invalid syntax.")
+			@log.warn("YAML file contains invalid syntax.")
+		end
+	end
+
+	#Sets the specified configuration options. Optionally, a configuration name can be specified.
+	#Params:
+	#+options+:: Configuration options.
+	#+name+:: Configuration name. If not specified, the default configuration is used.
+	def self.set(options = {}, name = CONFIG_DEFAULT_NAME)
+		cfg = @configs[name]
+		if cfg
+			cfg.set(options)
+		else
+			@configs[name] = Config.new(options)
 		end
 	end
 
 
 	#some tests
 	
-	
-	self.set_config({
+
+	binding.pry
+
+	self.set({
 		:test1 => "hello",
 		:test2 => "world!"
 	})
+
+	self.set({
+		:test3 => "Goodbye",
+		:test4 => "world!"
+	}, "default")
+
+
+	self.load()
 
 
 	if @configs
