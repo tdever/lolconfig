@@ -23,8 +23,11 @@ module Lolconfig
 		end
 	end
 
+	def self.load(path)
 
-	def self.load(filename, name = "default")
+	end
+
+	def self.load_file(filename, name = "default")
 		return unless filename
 
 		begin
@@ -57,10 +60,8 @@ module Lolconfig
 	if @configs
 		@configs.each { |k, v|
 			if v
-				puts v
-
-				v.each { |k2, v2|
-					puts "{k2}: {v2}"
+				v.get_keys().each { |k|
+					puts v.get(k)	
 				}
 			end
 		}
