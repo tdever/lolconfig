@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 require "yaml"
-require "pry"
+#require "pry"
 
 module Lolconfig
 

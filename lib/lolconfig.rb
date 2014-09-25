@@ -3,7 +3,7 @@ require "yaml"
 require "./lolconfig/version"
 require "./lolconfig/config"
 
-require "pry"
+#require "pry"
 
 #http://stackoverflow.com/questions/6233124/where-to-place-access-config-file-in-gem
 
@@ -108,37 +108,6 @@ module Lolconfig
 			end
 		end
 	end
-
-
-	#some tests
-	
-
-	binding.pry
-
-	self.set({
-		:test1 => "hello",
-		:test2 => "world!"
-	})
-
-	self.set({
-		:test3 => "Goodbye",
-		:test4 => "world!"
-	}, "default")
-
-
-	self.load()
-
-
-	if @configs
-		@configs.each { |k, v|
-			if v
-				v.get_keys().each { |k|
-					puts v.get(k)	
-				}
-			end
-		}
-	end
-
 end
 
 
