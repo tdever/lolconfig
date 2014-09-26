@@ -1,7 +1,7 @@
 require "logger"
 require "yaml"
-require "./lolconfig/version"
-require "./lolconfig/config"
+require "lolconfig/version"
+require "lolconfig/config"
 
 #require "pry"
 
@@ -52,7 +52,7 @@ module Lolconfig
 	#Loads the default configuration file from the current working directory.
 	def self.load()
 		name = CONFIG_DEFAULT_FILENAME
-		if(File.extname(name) != "yaml")
+		if(File.extname(name) != ".yaml")
 			name = name + ".yaml"
 		end
 
@@ -61,7 +61,7 @@ module Lolconfig
 		if File.exists? name
 			self.load_file(filename)
 		else
-			@log.warn("Config file \"{name}\" not found.")
+			@log.warn("Config file \"#{name}\" not found.")
 		end
 	end
 

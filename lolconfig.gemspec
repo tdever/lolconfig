@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tim Dever"]
   spec.email         = ["tdever@users.noreply.github.com"]
   spec.summary       = %q{lolconfig is a lightweight way to configure your ruby app.}
-  spec.description   = %q{}
-  spec.homepage      = ""
+  spec.description   = %q{This gem provides a way to configure an app via YAML or hash objects.}
+  spec.homepage      = "https://github.com/tdever/lolconfig"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   #dependencies
-  spec.add_dependency "yaml", "~> 2.0"
 
   #development dependencies
   spec.add_development_dependency "bundler", "~> 1.7"
